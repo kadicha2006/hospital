@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-class Profile(AbstractUser):
+class UserProfile(AbstractUser):
     ROLE_CHOICES = [
         ('admin', 'Admin'),
         ('doctor', 'Doctor'),
@@ -17,12 +17,9 @@ class Profile(AbstractUser):
     def __str__(self):
         return self.role
 
-    groups = None
-    user_permissions = None
-
 
 class PatientProfile(models.Model):
-    user = models.OneToOneField(Profile, on_delete=models.CASCADE, related_name='patient_profile')
+    user = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='patient_profile')
     emergency_contact = models.CharField(max_length=15, blank=True, null=True)
     blood_type = models.CharField(max_length=3, blank=True, null=True)
     allergies = models.TextField(blank=True, null=True)
@@ -33,8 +30,9 @@ class PatientProfile(models.Model):
 
 
 class Doctor(models.Model):
-    user = models.OneToOneField(Profile, on_delete=models.CASCADE, related_name='doctor_profile')
+    user = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='doctor_profile')
     specialty = models.CharField(max_length=100)
+  #  department = models.ForeignKey(Department, on_delete=models.CASCADE)
     shift_start = models.TimeField()
     shift_end = models.TimeField()
     working_days = models.DateField()

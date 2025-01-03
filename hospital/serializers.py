@@ -4,7 +4,7 @@ from rest_framework.authtoken.admin import User
 from mysite.hospital.models import Doctor, PatientProfile, Result, Appointment, Feedback
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'role', 'phone_number', 'profile_picture']
